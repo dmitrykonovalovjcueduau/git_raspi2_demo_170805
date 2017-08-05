@@ -15,7 +15,9 @@ def main():
 
     # ./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights data/dog.jpg
     # os.system('"./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights data/dog.jpg"')
-    os.system('"./darknet detector test ./cfg/voc.data ./cfg/tiny-yolo-voc.cfg ./tiny-yolo-voc.weights ./data/dog.jpg"')
+    # os.system('"./darknet detector test ./cfg/voc.data ./cfg/tiny-yolo-voc.cfg ./tiny-yolo-voc.weights ./data/dog.jpg"')
+    os.system('"darknet "')
+    os.system('"./darknet "')
     # show_webcam()
 
 
