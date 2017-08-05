@@ -27,7 +27,7 @@ def show_from_darknet():
     print('show_from_darknet()...')
     import os
     os.chdir(os.path.join(home, 'darknet'))
-    img = cv2.imread('predictions.png', 0)
+    img = cv2.imread('predictions.jpg', 0)
     cv2.imshow('image', img)
 
 
