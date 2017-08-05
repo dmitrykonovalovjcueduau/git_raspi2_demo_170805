@@ -15,6 +15,7 @@ def show_webcam(mirror=False):
         if cv2.waitKey(1) == 27:
             break  # esc to quit
     cv2.destroyAllWindows()
+    cam.release()
 
 def main():
     show_webcam(mirror=True)

@@ -1,6 +1,6 @@
+from __future__ import print_function
 import numpy as np
 import cv2
-
 # http://docs.opencv.org/trunk/d7/d8b/tutorial_py_face_detection.html
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -11,6 +11,8 @@ def show_webcam():
     cam = cv2.VideoCapture(0)
     while True:
         ret_val, img = cam.read()
+        if ret_val:
+            print('img.shape=', img.shape)
 
         detect_face(img)
         # cv2.imshow('my webcam', img)
@@ -26,6 +28,7 @@ def main():
 def detect_face(img):
     # img = cv2.imread('sachin.jpg')
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    print('gray.shape=', gray.shape)
 
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
