@@ -2,8 +2,12 @@ from __future__ import print_function
 import numpy as np
 import cv2
 from os.path import expanduser
+import os
 
 home = expanduser("~")
+
+FROM_CV2 = os.path.join(home, 'darknet', 'from_cv2.jpg')
+FROM_DARKNET = os.path.join(home, 'darknet', 'predictions.jpg')
 
 def show_webcam():
     cam = cv2.VideoCapture(0)
@@ -26,17 +30,14 @@ def main():
 
 def show_from_darknet():
     print('show_from_darknet()...')
-    import os
-    os.chdir(os.path.join(home, 'darknet'))
-    img = cv2.imread('predictions.jpg', 0)
+    img = cv2.imread(FROM_DARKNET, 0)
     cv2.imshow('image', img)
 
 
 def save_input_to_darknet(img):
     print('save_input_to_darknet()...')
-    import os
-    os.chdir(os.path.join(home, 'darknet'))
-    cv2.imwrite('from_cv2.jpg', img)
+    os.remove(FROM_CV2)
+    cv2.imwrite(FROM_CV2, img)
 
 
 def call_darknet():
