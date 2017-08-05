@@ -1,70 +1,54 @@
 from __future__ import print_function
 import numpy as np
 import cv2
-# http://docs.opencv.org/trunk/d7/d8b/tutorial_py_face_detection.html
+from os.path import expanduser
 
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
-
+home = expanduser("~")
 
 def show_webcam():
     cam = cv2.VideoCapture(0)
     while True:
         ret_val, img = cam.read()
-        # if ret_val:
-        #     print('img.shape=', img.shape)
 
-        detect_face(img)
-        # cv2.imshow('my webcam', img)
+        save_input_to_darknet(img)
+        call_darknet()
+        show_from_darknet()
 
         if cv2.waitKey(1) == 27:
             break  # esc to quit
+    cam.release()
     cv2.destroyAllWindows()
 
 def main():
     show_webcam()
 
 
-def detect_face(img):
-    # img = cv2.imread('sachin.jpg')
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    # print('gray.shape=', gray.shape)
+def show_from_darknet():
+    print('show_from_darknet()...')
+    import os
+    os.chdir(os.path.join(home, 'darknet'))
+    img = cv2.imread('predictions.png', 0)
+    cv2.imshow('image', img)
 
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-    for (x,y,w,h) in faces:
-        cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
-        roi_gray = gray[y:y+h, x:x+w]
-        roi_color = img[y:y+h, x:x+w]
-        eyes = eye_cascade.detectMultiScale(roi_gray)
-        for (ex,ey,ew,eh) in eyes:
-            cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
-    cv2.imshow('img',img)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+
+def save_input_to_darknet(img):
+    print('save_input_to_darknet()...')
+    import os
+    os.chdir(os.path.join(home, 'darknet'))
+    cv2.imwrite('from_cv2.jpg', img)
+
+
+def call_darknet():
+    print('call_darknet()...')
+    from subprocess import call
+    import os
+    os.chdir(os.path.join(home, 'darknet'))
+    # ./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights data/dog.jpg
+    call(["./darknet", "detector", "test", "cfg/voc.data",
+          "cfg/tiny-yolo-voc.cfg", "tiny-yolo-voc.weights", "from_cv2.jpg"])
 
 
 if __name__ == '__main__':
     main()
 
 
-'''  http://docs.opencv.org/trunk/d7/d8b/tutorial_py_face_detection.html
-# ORIGINALS...
-import numpy as np
-import cv2
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
-img = cv2.imread('sachin.jpg')
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-for (x,y,w,h) in faces:
-    cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
-    roi_gray = gray[y:y+h, x:x+w]
-    roi_color = img[y:y+h, x:x+w]
-    eyes = eye_cascade.detectMultiScale(roi_gray)
-    for (ex,ey,ew,eh) in eyes:
-        cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
-cv2.imshow('img',img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-'''
