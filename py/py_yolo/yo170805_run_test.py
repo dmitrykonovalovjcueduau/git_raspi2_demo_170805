@@ -12,9 +12,10 @@ def main():
     subprocess.call("ls")
     os.chdir(os.path.join(home, 'darknet'))
     subprocess.call("ls")
-    
+
     # ./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights data/dog.jpg
-    os.system('"./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights data/dog.jpg"')
+    # os.system('"./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights data/dog.jpg"')
+    os.system('"./darknet detector test ./cfg/voc.data ./cfg/tiny-yolo-voc.cfg ./tiny-yolo-voc.weights ./data/dog.jpg"')
     # show_webcam()
 
 
