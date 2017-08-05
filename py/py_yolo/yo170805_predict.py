@@ -8,6 +8,7 @@ home = expanduser("~")
 def show_webcam():
     cam = cv2.VideoCapture(0)
     while True:
+        cv2.destroyAllWindows()
         ret_val, img = cam.read()
 
         save_input_to_darknet(img)
