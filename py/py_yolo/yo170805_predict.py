@@ -36,7 +36,8 @@ def show_from_darknet():
 
 def save_input_to_darknet(img):
     print('save_input_to_darknet()...')
-    os.remove(FROM_CV2)
+    if os.path.isfile(FROM_CV2):
+        os.remove(FROM_CV2)
     cv2.imwrite(FROM_CV2, img)
 
 
